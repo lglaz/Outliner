@@ -17,15 +17,14 @@ namespace Outliner.ViewModel
 
         public ViewModelLocator ()
         {
-            _document = new OutlineDocumentViewModel();
-            var o1 = new OutlineViewModel() { Text = "Outline 1" };
-            _document.Outlines.Add(o1);
-            _document.Outlines.Add(new OutlineViewModel() { Text = "Outline 2" });
-            _document.Outlines.Add(new OutlineViewModel() { Text = "Outline 3" });
+            _document = new OutlineDocumentViewModel();             
+            var o1 = _document.Add("Outline 1");
+            _document.Add("Outline 2");
+            _document.Add("Outline 3");
 
-            o1.Children.Add(new OutlineViewModel() { Text = "Outline 1.1" });
-            o1.Children.Add(new OutlineViewModel() { Text = "Outline 1.2" });
-            o1.Children.Add(new OutlineViewModel() { Text = "Outline 1.3" });
+            o1.Add("Outline 1.1");
+            o1.Add("Outline 1.2");
+            o1.Add("Outline 1.3");
         }
     }
 }
