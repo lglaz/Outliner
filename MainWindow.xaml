@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Outliner"        
+        xmlns:local="clr-namespace:Outliner"  
+        xmlns:util="clr-namespace:Outliner.Util"
         mc:Ignorable="d"
         DataContext="{StaticResource Locator}"
         Title="MainWindow" Height="350" Width="525">
@@ -26,7 +27,7 @@
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Children}" >
                     <Grid Background="Yellow">
-                        <TextBox Text="{Binding Text}" >
+                        <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" util:FocusBehavior.IsFocused="{Binding IsFocused}" >
                             <TextBox.InputBindings>
                                 <KeyBinding Key="Return" Command="{Binding AddNewSiblingCommand}" />
                                 <KeyBinding Key="Tab" Command="{Binding IndentCommand}" />

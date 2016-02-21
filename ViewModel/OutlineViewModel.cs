@@ -15,6 +15,7 @@ namespace Outliner.ViewModel
         private ObservableCollection<OutlineViewModel> _children;
         private bool _isSelected;
         private bool _isExpanded;
+        private bool _isFocused;
 
         public string Text
         {
@@ -46,6 +47,12 @@ namespace Outliner.ViewModel
             set { Set(ref _isExpanded, value); }
         }
 
+        public bool IsFocused
+        {
+            get { return _isFocused; }
+            set { Set(ref _isFocused, value); }
+        }
+
         public RelayCommand AddNewSiblingCommand { get; private set; }
         public RelayCommand IndentCommand { get; private set; }
         public RelayCommand OutdentCommand { get; private set; }
@@ -65,11 +72,11 @@ namespace Outliner.ViewModel
                 var idx = GetPosition() + 1;
                 if (idx >= Parent.Children.Count)
                 {
-                    Parent.Add();
+                    Parent.Add().IsFocused = true; 
                 }
                 else
                 {                    
-                    Parent.Insert(idx);
+                    Parent.Insert(idx).IsFocused = true;
                 }
             }
         }
@@ -87,6 +94,8 @@ namespace Outliner.ViewModel
                 Parent.Children.RemoveAt(idx);
                 Parent = Parent.Children[idx - 1];
                 Parent.Children.Add(this);
+                Parent.IsExpanded = true;
+                IsFocused = true;
             }
         }
 
@@ -106,6 +115,8 @@ namespace Outliner.ViewModel
                 {
                     Parent.Children.Insert(idx, this);
                 }
+                Parent.IsExpanded = true;
+                IsFocused = true;                
             }
         }
 

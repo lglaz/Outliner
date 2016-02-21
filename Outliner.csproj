@@ -56,6 +56,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Util\CommandBase.cs" />
+    <Compile Include="Util\FocusBehavior.cs" />
     <Compile Include="Util\RelayCommand.cs" />
     <Compile Include="ViewModel\OutlineDocumentViewModel.cs" />
     <Compile Include="Util\ObservableObject.cs" />
