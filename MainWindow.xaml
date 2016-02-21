@@ -29,6 +29,8 @@
                         <TextBox Text="{Binding Text}" >
                             <TextBox.InputBindings>
                                 <KeyBinding Key="Return" Command="{Binding AddNewSiblingCommand}" />
+                                <KeyBinding Key="Tab" Command="{Binding IndentCommand}" />
+                                <KeyBinding Key="Tab" Modifiers="Shift" Command="{Binding OutdentCommand}" />
                             </TextBox.InputBindings>
                         </TextBox>
                     </Grid>

@@ -47,19 +47,22 @@ namespace Outliner.ViewModel
         }
 
         public RelayCommand AddNewSiblingCommand { get; private set; }
+        public RelayCommand IndentCommand { get; private set; }
+        public RelayCommand OutdentCommand { get; private set; }
 
         public OutlineViewModel()
         {
             _children = new ObservableCollection<OutlineViewModel>();
-
             AddNewSiblingCommand = new RelayCommand(AddNewSibling);
+            IndentCommand = new RelayCommand(Indent);
+            OutdentCommand = new RelayCommand(Outdent);
         }
 
         private void AddNewSibling()
         {
             if(Parent != null)
             {
-                var idx = Parent.Children.IndexOf(this) + 1;
+                var idx = GetPosition() + 1;
                 if (idx >= Parent.Children.Count)
                 {
                     Parent.Add();
@@ -67,6 +70,41 @@ namespace Outliner.ViewModel
                 else
                 {                    
                     Parent.Insert(idx);
+                }
+            }
+        }
+
+        private int GetPosition()
+        {
+            return Parent.Children.IndexOf(this);
+        }
+
+        private void Indent()
+        {
+            var idx = GetPosition();
+            if(idx > 0)
+            {
+                Parent.Children.RemoveAt(idx);
+                Parent = Parent.Children[idx - 1];
+                Parent.Children.Add(this);
+            }
+        }
+
+        private void Outdent()
+        {
+            if(Parent != null && Parent.Parent != null)
+            {
+                var idx = GetPosition();
+                Parent.Children.RemoveAt(idx);
+                idx = Parent.GetPosition() + 1;
+                Parent = Parent.Parent;
+                if (idx >= Parent.Children.Count)
+                {
+                    Parent.Children.Add(this);
+                }
+                else
+                {
+                    Parent.Children.Insert(idx, this);
                 }
             }
         }
