@@ -15,7 +15,7 @@ namespace Outliner.ViewModel
         private ObservableCollection<OutlineViewModel> _children;
         private bool _isSelected;
         private bool _isExpanded;
-        private bool _isFocused;
+        private bool? _isFocused;
 
         public string Text
         {
@@ -47,7 +47,7 @@ namespace Outliner.ViewModel
             set { Set(ref _isExpanded, value); }
         }
 
-        public bool IsFocused
+        public bool? IsFocused
         {
             get { return _isFocused; }
             set { Set(ref _isFocused, value); }
@@ -56,6 +56,9 @@ namespace Outliner.ViewModel
         public RelayCommand AddNewSiblingCommand { get; private set; }
         public RelayCommand IndentCommand { get; private set; }
         public RelayCommand OutdentCommand { get; private set; }
+        public RelayCommand GoUpCommand { get; private set; }
+        public RelayCommand GoDownCommand { get; private set; }
+        public virtual bool IsFocusable { get { return true; } }
 
         public OutlineViewModel()
         {
@@ -63,6 +66,8 @@ namespace Outliner.ViewModel
             AddNewSiblingCommand = new RelayCommand(AddNewSibling);
             IndentCommand = new RelayCommand(Indent);
             OutdentCommand = new RelayCommand(Outdent);
+            GoUpCommand = new RelayCommand(GoUp);
+            GoDownCommand = new RelayCommand(GoDown);
         }
 
         private void AddNewSibling()
@@ -117,6 +122,61 @@ namespace Outliner.ViewModel
                 }
                 Parent.IsExpanded = true;
                 IsFocused = true;                
+            }
+        }
+
+        private void GoUp()
+        {
+            var idx = GetPosition();
+            if(idx > 0)
+            {
+                Parent.Children[idx - 1].FocusLastVisibleSubtreeElement();
+            }
+            else
+            {
+                if(Parent.IsFocusable)
+                {
+                    Parent.IsFocused = true;
+                }
+            }
+        }
+
+        private void FocusLastVisibleSubtreeElement()
+        {
+            if(IsExpanded && Children.Count > 0)
+            {
+                Children.Last().FocusLastVisibleSubtreeElement();
+            }
+            else
+            {
+                IsFocused = true;
+            }
+        }
+
+        private void GoDown()
+        {
+            if(IsExpanded && Children.Count > 0)
+            {
+                Children[0].IsFocused = true;
+            }
+            else
+            {
+                FocusNextElement();
+            }
+        }
+
+        private void FocusNextElement()
+        {
+            if (Parent == null)
+                return;
+            var idx = GetPosition() + 1;
+            if (idx < Parent.Children.Count)
+            {
+                Parent.Children[idx].IsFocused = true;
+            }
+            else
+            {
+                Parent.FocusNextElement();
             }
         }
 

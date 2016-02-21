@@ -27,11 +27,13 @@
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Children}" >
                     <Grid Background="Yellow">
-                        <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" util:FocusBehavior.IsFocused="{Binding IsFocused}" >
+                        <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" util:FocusBehavior.IsFocused="{Binding IsFocused, Mode=TwoWay}" >
                             <TextBox.InputBindings>
                                 <KeyBinding Key="Return" Command="{Binding AddNewSiblingCommand}" />
                                 <KeyBinding Key="Tab" Command="{Binding IndentCommand}" />
                                 <KeyBinding Key="Tab" Modifiers="Shift" Command="{Binding OutdentCommand}" />
+                                <KeyBinding Key="Up" Command="{Binding GoUpCommand}" />
+                                <KeyBinding Key="Down" Command="{Binding GoDownCommand}" />
                             </TextBox.InputBindings>
                         </TextBox>
                     </Grid>
