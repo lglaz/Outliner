@@ -18,6 +18,7 @@ namespace Outliner.Model
                 JsonSerializer serializer = new JsonSerializer();
                 OutlineDocumentViewModel doc = (OutlineDocumentViewModel)serializer.Deserialize(file, typeof(OutlineDocumentViewModel));
                 doc.RefreshParentalReferences();
+                doc.SavePath(path);                
                 return doc;
             }
 

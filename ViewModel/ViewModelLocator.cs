@@ -19,7 +19,7 @@ namespace Outliner.ViewModel
 
         public ViewModelLocator ()
         {
-            _document = new OutlineDocumentViewModel();             
+            _document = new OutlineDocumentViewModel() { Text = "test" };             
             var o1 = _document.Add("Outline 1");
             _document.Add("Outline 2");
             _document.Add("Outline 3");
@@ -29,7 +29,7 @@ namespace Outliner.ViewModel
             o1.Add("Outline 1.3");
 
             _mainWindow = new MainWindowViewModel(new FileDialogService());
-            _mainWindow.CurrentDocument = _document;
+            _mainWindow.OpenDocument(_document);            
         }
     }
 }

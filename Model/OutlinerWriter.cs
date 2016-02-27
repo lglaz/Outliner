@@ -14,6 +14,7 @@ namespace Outliner.Model
         public static void Write(OutlineDocumentViewModel outline, string path)
         {
             File.WriteAllText(path, JsonConvert.SerializeObject(outline));
+            outline.SavePath(path);
         }
     }
 }
