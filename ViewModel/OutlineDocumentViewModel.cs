@@ -14,6 +14,6 @@ namespace Outliner.ViewModel
 
         public OutlineDocumentViewModel()
         {     
-        }
+        }        
     }
 }

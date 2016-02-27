@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Outliner.Util;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,10 +10,11 @@ namespace Outliner.ViewModel
     public class ViewModelLocator
     {
         private OutlineDocumentViewModel _document;
+        private MainWindowViewModel _mainWindow;        
 
-        public OutlineDocumentViewModel Document
+        public MainWindowViewModel MainWindow
         {
-            get { return _document; }            
+            get { return _mainWindow; }
         }
 
         public ViewModelLocator ()
@@ -25,6 +27,9 @@ namespace Outliner.ViewModel
             o1.Add("Outline 1.1");
             o1.Add("Outline 1.2");
             o1.Add("Outline 1.3");
+
+            _mainWindow = new MainWindowViewModel(new FileDialogService());
+            _mainWindow.CurrentDocument = _document;
         }
     }
 }

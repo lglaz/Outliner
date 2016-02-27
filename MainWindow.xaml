@@ -8,37 +8,45 @@
         mc:Ignorable="d"
         DataContext="{StaticResource Locator}"
         Title="MainWindow" Height="350" Width="525">
-    
-    <Grid>
-        <TreeView ItemsSource="{Binding Document.Children}">
-            <TreeView.ItemContainerStyle>
-                <Style TargetType="{x:Type TreeViewItem}">
-                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
-                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
-                    <Setter Property="FontWeight" Value="Normal" />
-                    <Style.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="FontWeight" Value="Bold" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </TreeView.ItemContainerStyle>
+    <StackPanel Orientation="Vertical">
+        <Menu IsMainMenu="True">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Open ..." Command="{Binding MainWindow.OpenFileCommand}" />
+                <MenuItem Header="_Save ..." Command="{Binding MainWindow.SaveFileCommand}"/>
+                <MenuItem Header="Save As ..." Command="{Binding MainWindow.SaveAsFileCommand}" />
+            </MenuItem>
+        </Menu>
+        <Grid>
+            <TreeView ItemsSource="{Binding MainWindow.CurrentDocument.Children}">
+                <TreeView.ItemContainerStyle>
+                    <Style TargetType="{x:Type TreeViewItem}">
+                        <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                        <Setter Property="FontWeight" Value="Normal" />
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="FontWeight" Value="Bold" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TreeView.ItemContainerStyle>
 
-            <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate ItemsSource="{Binding Children}" >
-                    <Grid Background="Yellow">
-                        <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" util:FocusBehavior.IsFocused="{Binding IsFocused, Mode=TwoWay}" >
-                            <TextBox.InputBindings>
-                                <KeyBinding Key="Return" Command="{Binding AddNewSiblingCommand}" />
-                                <KeyBinding Key="Tab" Command="{Binding IndentCommand}" />
-                                <KeyBinding Key="Tab" Modifiers="Shift" Command="{Binding OutdentCommand}" />
-                                <KeyBinding Key="Up" Command="{Binding GoUpCommand}" />
-                                <KeyBinding Key="Down" Command="{Binding GoDownCommand}" />
-                            </TextBox.InputBindings>
-                        </TextBox>
-                    </Grid>
-                </HierarchicalDataTemplate>
-            </TreeView.ItemTemplate>
-        </TreeView>
-    </Grid>
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Children}" >
+                        <Grid Background="Yellow">
+                            <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" util:FocusBehavior.IsFocused="{Binding IsFocused, Mode=TwoWay}" >
+                                <TextBox.InputBindings>
+                                    <KeyBinding Key="Return" Command="{Binding AddNewSiblingCommand}" />
+                                    <KeyBinding Key="Tab" Command="{Binding IndentCommand}" />
+                                    <KeyBinding Key="Tab" Modifiers="Shift" Command="{Binding OutdentCommand}" />
+                                    <KeyBinding Key="Up" Command="{Binding GoUpCommand}" />
+                                    <KeyBinding Key="Down" Command="{Binding GoDownCommand}" />
+                                </TextBox.InputBindings>
+                            </TextBox>
+                        </Grid>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
+        </Grid>
+    </StackPanel>
 </Window>

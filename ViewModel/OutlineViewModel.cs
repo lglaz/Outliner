@@ -1,4 +1,5 @@
-﻿using Outliner.Util;
+﻿using Newtonsoft.Json;
+using Outliner.Util;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Outliner.ViewModel
 {
+    [JsonObject(MemberSerialization.OptIn)]
     public class OutlineViewModel : ObservableObject
     {
         private string _text;
@@ -17,6 +19,7 @@ namespace Outliner.ViewModel
         private bool _isExpanded;
         private bool? _isFocused;
 
+        [JsonProperty]
         public string Text
         {
             get { return _text; }
@@ -28,7 +31,7 @@ namespace Outliner.ViewModel
             get { return _parent; }
             set { Set(ref _parent, value); }
         }
-
+        [JsonProperty]
         public ObservableCollection<OutlineViewModel> Children
         {
             get { return _children; }
@@ -192,6 +195,15 @@ namespace Outliner.ViewModel
             var outline = new OutlineViewModel() { Parent = this, Text = text };
             Children.Insert(index, outline);
             return outline;
+        }
+
+        internal void RefreshParentalReferences()
+        {
+            foreach(var child in Children)
+            {
+                child.Parent = this;
+                child.RefreshParentalReferences();
+            }
         }
     }
 }
