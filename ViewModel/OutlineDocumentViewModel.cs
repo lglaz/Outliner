@@ -20,9 +20,22 @@ namespace Outliner.ViewModel
             private set { Set(ref _path, value); }
         }
 
+        public RelayCommand CloseCommand { get; private set; }
+
         public OutlineDocumentViewModel()
-        {     
+        {
+            CloseCommand = new RelayCommand(OnRequestClose);
+            Add();
         }
+
+        public event EventHandler RequestClose;
+
+        private void OnRequestClose()
+        {
+            EventHandler handler = this.RequestClose;
+            if (handler != null)
+                handler(this, EventArgs.Empty);
+        }        
 
         internal void SavePath(string path)
         {

@@ -8,18 +8,24 @@
         mc:Ignorable="d"
         DataContext="{StaticResource Locator}"
         Title="MainWindow" Height="350" Width="525">
-    <StackPanel Orientation="Vertical">
-        <Menu IsMainMenu="True">
-            <MenuItem Header="_File">
-                <MenuItem Header="_Open ..." Command="{Binding MainWindow.OpenFileCommand}" />
-                <MenuItem Header="_Save ..." Command="{Binding MainWindow.SaveFileCommand}"/>
-                <MenuItem Header="Save As ..." Command="{Binding MainWindow.SaveAsFileCommand}" />
-            </MenuItem>
-        </Menu>
+    <DockPanel>
+        <DockPanel DockPanel.Dock="Top">
+            <Menu IsMainMenu="True">
+                <MenuItem Header="_File">
+                    <MenuItem Header="_New" Command="{Binding MainWindow.NewFileCommand}" />
+                    <MenuItem Header="_Open ..." Command="{Binding MainWindow.OpenFileCommand}" />
+                    <MenuItem Header="_Save ..." Command="{Binding MainWindow.SaveFileCommand}"/>
+                    <MenuItem Header="Save As ..." Command="{Binding MainWindow.SaveAsFileCommand}" />
+                </MenuItem>
+            </Menu>
+        </DockPanel>
         <TabControl ItemsSource="{Binding MainWindow.OpenedDocuments}">
             <TabControl.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Text}" />
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Text}" />
+                        <Button Command="{Binding CloseCommand}">X</Button>
+                    </StackPanel>
                 </DataTemplate>
             </TabControl.ItemTemplate>
             <TabControl.ContentTemplate>
@@ -56,5 +62,5 @@
                 </DataTemplate>
             </TabControl.ContentTemplate>
         </TabControl>
-    </StackPanel>
+    </DockPanel>
 </Window>
