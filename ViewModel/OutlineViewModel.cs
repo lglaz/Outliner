@@ -70,10 +70,7 @@ namespace Outliner.ViewModel
 
         public Type DataType
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { return typeof(OutlineViewModel); }
         }
 
         public OutlineViewModel()

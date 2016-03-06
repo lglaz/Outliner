@@ -44,6 +44,7 @@
                                             <KeyBinding Key="Down" Command="{Binding GoDownCommand}" />
                                         </TextBox.InputBindings>
                                     </TextBox>
+                                    <!--<TextBlock Text="{Binding Text}"></TextBlock>-->
                                     <i:Interaction.Behaviors>
                                         <util:FrameworkElementDragBehavior/>
                                         <util:FrameworkElementDropBehavior/>
