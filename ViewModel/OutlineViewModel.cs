@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Outliner.ViewModel
 {
     [JsonObject(MemberSerialization.OptIn)]
-    public class OutlineViewModel : ObservableObject
+    public class OutlineViewModel : ObservableObject, IDragable, IDropable
     {
         private string _text;
         private OutlineViewModel _parent;
@@ -67,6 +67,14 @@ namespace Outliner.ViewModel
         public RelayCommand GoUpCommand { get; private set; }
         public RelayCommand GoDownCommand { get; private set; }
         public virtual bool IsFocusable { get { return true; } }
+
+        public Type DataType
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
 
         public OutlineViewModel()
         {
@@ -209,6 +217,24 @@ namespace Outliner.ViewModel
                 child.Parent = this;
                 child.RefreshParentalReferences();
             }
+        }
+
+        public void Remove(object i)
+        {
+            
+        }
+
+        public void Drop(object data, int index = -1)
+        {
+            var outline = data as OutlineViewModel;
+            if (outline == null || outline == this)
+                return;
+
+            //todo: check if not parent
+            outline.Parent.Children.Remove(outline);
+            Children.Add(outline);
+            outline.Parent = this;
+
         }
     }
 }

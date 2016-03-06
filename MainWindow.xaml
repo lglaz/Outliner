@@ -1,6 +1,7 @@
 ﻿<Window x:Class="Outliner.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Outliner"  
@@ -43,6 +44,10 @@
                                             <KeyBinding Key="Down" Command="{Binding GoDownCommand}" />
                                         </TextBox.InputBindings>
                                     </TextBox>
+                                    <i:Interaction.Behaviors>
+                                        <util:FrameworkElementDragBehavior/>
+                                        <util:FrameworkElementDropBehavior/>
+                                    </i:Interaction.Behaviors>
                                 </Grid>
                             </HierarchicalDataTemplate>
                         </TreeView.ItemTemplate>
