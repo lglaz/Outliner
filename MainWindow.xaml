@@ -33,8 +33,8 @@
                     <TreeView ItemsSource="{Binding Children}" Style="{DynamicResource OutlineTreeViewStyle}" ItemContainerStyle="{DynamicResource OutlineTreeViewItemStyle}">
                         <TreeView.ItemTemplate>
                             <HierarchicalDataTemplate ItemsSource="{Binding Children}" >
-                                <Grid Background="Yellow">
-                                    <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" util:FocusBehavior.IsFocused="{Binding IsFocused, Mode=TwoWay}" >
+                                <Grid>
+                                    <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" util:FocusBehavior.IsFocused="{Binding IsFocused, Mode=TwoWay}" BorderThickness="0">
                                         <TextBox.InputBindings>
                                             <KeyBinding Key="Return" Command="{Binding AddNewSiblingCommand}" />
                                             <KeyBinding Key="Tab" Command="{Binding IndentCommand}" />
