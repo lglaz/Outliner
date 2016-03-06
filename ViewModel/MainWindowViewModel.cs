@@ -48,6 +48,7 @@ namespace Outliner.ViewModel
         public void NewFile()
         {
             var doc = new OutlineDocumentViewModel() { Text = "NewOutline" };
+            doc.Add();
             OpenDocument(doc);
         }
 

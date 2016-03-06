@@ -47,7 +47,12 @@ namespace Outliner.ViewModel
         public bool IsExpanded
         {
             get { return _isExpanded; }
-            set { Set(ref _isExpanded, value); }
+            set
+            {
+                if (value && Children.Count <= 0)
+                    return;
+                Set(ref _isExpanded, value);
+            }
         }
 
         public bool? IsFocused

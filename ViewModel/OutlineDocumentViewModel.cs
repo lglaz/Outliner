@@ -24,8 +24,7 @@ namespace Outliner.ViewModel
 
         public OutlineDocumentViewModel()
         {
-            CloseCommand = new RelayCommand(OnRequestClose);
-            Add();
+            CloseCommand = new RelayCommand(OnRequestClose);            
         }
 
         public event EventHandler RequestClose;
